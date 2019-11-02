@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+    #company {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    }
+
+    #company td, #customers th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    }
+
+    #company tr:nth-child(even){background-color: #f2f2f2;}
+
+    #company tr:hover {background-color: #ddd;}
+
+    #company th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+    }
+    </style>
+</head>
+<body>
+
+<table id="company">
+<tr>
+    <th>Company Name</th>
+    <th>Country</th>
+    <th>Industry</th>
+    <th>Year Founded</th>
+    <th>Company Size (linkedin)</th>
+    <th>Locality</th>
+    <th>Current Employee</th>
+    <th>Total Employee (est.)</th>
+    <th>Domain</th>
+    <th>Linkedin Link</th>
+</tr>
+{% for value in qres %}
+<tr>
+    <td> {{ value.str_name_label }}</td>
+    <td> {{ value.str_country_label }} </td>
+    <td> {{ value.str_industry_label }} </td>
+    <td> {{ value.str_year }} </td>
+    <td> {{ value.str_size }} </td>
+    <td> {{ value.str_locality_label }} </td>
+    <td> {{ value.str_current }} </td>
+    <td> {{ value.str_total }} </td>
+    <td> <a href="{{ value.domainurl }}">{{ value.domainurl }}</a> </td>
+    <td> <a href="{{ value.linkedinurl }}">{{ value.linkedinurl }}</a> </td>
+</tr>
+{% endfor %}
+</table>
+
+</body>
+</html>

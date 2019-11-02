@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+    #company {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    }
+
+    #company td, #customers th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    }
+
+    #company tr:nth-child(even){background-color: #f2f2f2;}
+
+    #company tr:hover {background-color: #ddd;}
+
+    #company th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+    }
+    </style>
+</head>
+<body>
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<div>
+    <form action="{% url 'search' %}" method="post">
+        {% csrf_token %}
+        <input type="text" name="companyname">    
+        <input type="submit" value="Search Company">
+    </form>
+</div>
+<br>
+<div>
+    <table id="company">
+    <tr>
+        <th>Company Name</th>
+        <th>Country</th>
+        <th>Linkedin Link</th>
+    </tr>
+    {% for value in qres %}
+    <tr>
+        <td> <a href="{% url 'info' value.id %}">{{ value.str_name_label }}</a> </td>
+        <td> {{ value.str_country_label }} </td>
+        <td> <a href="{{ value.linkedinurl }}">{{ value.linkedinurl }}</a> </td>
+    </tr>
+    {% endfor %}
+    </table>
+</div>
+
+</body>
+</html>
