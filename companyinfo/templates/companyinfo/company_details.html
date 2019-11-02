@@ -40,6 +40,8 @@
     <th>Total Employee (est.)</th>
     <th>Domain</th>
     <th>Linkedin Link</th>
+    
+
 </tr>
 {% for value in qres %}
 <tr>
@@ -56,6 +58,10 @@
 </tr>
 {% endfor %}
 </table>
+
+{% for a, b in online_result.items %}
+     {{ a }}  &nbsp {{ b }} <br>
+{% endfor %}
 
 </body>
 </html>

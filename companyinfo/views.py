@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from companyinfo.query_rdf import getCompanyData, getAllCompany, getSomeCompany
+from companyinfo.query_rdf import getCompanyData, getAllCompany, getSomeCompany, getCompanyDataOnline
 from .models import Question
 from django.shortcuts import render
 
@@ -14,4 +14,17 @@ def search(request):
 
 def info(request, rdf_object):
     qres = getCompanyData(rdf_object)
-    return render(request, 'companyinfo/company_details.html', {'qres': qres})
+
+    for row in qres:
+        name = row.str_name_label
+
+    qresonline = getCompanyDataOnline(name)
+    online_result = {}
+
+    for result in qresonline["results"]["bindings"]:
+        pred = str(result["pred"]["value"]).split("/")[-1]
+        pred = pred.split("#")[-1]
+        obj = str(result["obj"]["value"]).split("/")[-1]
+        online_result[pred] = obj
+
+    return render(request, 'companyinfo/company_details.html', {'qres': qres, 'online_result': online_result})

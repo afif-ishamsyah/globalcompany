@@ -3,9 +3,24 @@ from rdflib.store import NO_STORE, VALID_STORE
 from rdflib import plugin, ConjunctiveGraph
 from rdflib.store import Store
 import sys
+from SPARQLWrapper import SPARQLWrapper, JSON
 
 # g = ConjunctiveGraph('Sleepycat')
 g = ConjunctiveGraph()
+
+
+def getCompanyDataOnline(param):
+    sparql = SPARQLWrapper("http://dbpedia.org/sparql")
+    sparql.setQuery("""
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    SELECT (lcase(str(?s)) as ?name) (str(?p) as ?pred)  (str(?o) as ?obj)
+    WHERE { ?s a dbo:Company .
+            ?s ?p ?o .
+            FILTER ( lcase(str(?s)) = 'http://dbpedia.org/resource/""" + str(param) + """' )} """)
+            
+    sparql.setReturnFormat(JSON)
+    results = sparql.query().convert()
+    return results
 
 def getCompanyData(param):
     # g.open('companyinfo/company', create=False)
