@@ -24,44 +24,125 @@
     background-color: #4CAF50;
     color: white;
     }
+
+    #company_online {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    }
+
+    #company_online td, #customers th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    }
+
+    #company_online tr:nth-child(even){background-color: #f2f2f2;}
+
+    #company_online tr:hover {background-color: #ddd;}
+
+    #company_online th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #af584c;
+    color: white;
+    }
     </style>
 </head>
 <body>
 
 <table id="company">
-<tr>
-    <th>Company Name</th>
-    <th>Country</th>
-    <th>Industry</th>
-    <th>Year Founded</th>
-    <th>Company Size (linkedin)</th>
-    <th>Locality</th>
-    <th>Current Employee</th>
-    <th>Total Employee (est.)</th>
-    <th>Domain</th>
-    <th>Linkedin Link</th>
-    
-
-</tr>
-{% for value in qres %}
-<tr>
-    <td> {{ value.str_name_label }}</td>
-    <td> {{ value.str_country_label }} </td>
-    <td> {{ value.str_industry_label }} </td>
-    <td> {{ value.str_year }} </td>
-    <td> {{ value.str_size }} </td>
-    <td> {{ value.str_locality_label }} </td>
-    <td> {{ value.str_current }} </td>
-    <td> {{ value.str_total }} </td>
-    <td> <a href="{{ value.domainurl }}">{{ value.domainurl }}</a> </td>
-    <td> <a href="{{ value.linkedinurl }}">{{ value.linkedinurl }}</a> </td>
-</tr>
-{% endfor %}
+<caption>Local Data</caption>
+    <tr>
+        <th>Company Name</th>
+        <th>Country</th>
+        <th>Industry</th>
+        <th>Year Founded</th>
+        <th>Company Size (linkedin)</th>
+        <th>Locality</th>
+        <th>Current Employee</th>
+        <th>Total Employee (est.)</th>
+        <th>Domain</th>
+        <th>Linkedin Link</th>
+    </tr>
+    <tr>
+        <td> {{ local_result.name }}</td>
+        <td> {{ local_result.country_label }} </td>
+        <td> {{ local_result.industry_label }} </td>
+        <td> {{ local_result.year }} </td>
+        <td> {{ local_result.size }} </td>
+        <td> {{ local_result.locality_label }} </td>
+        <td> {{ local_result.current }} </td>
+        <td> {{ local_result.total }} </td>
+        {% if 'Not Exist' not in local_result.domainurl %}
+            <td> <a href="{{ local_result.domainurl }}">{{ local_result.domainurl }}</a> </td>
+        {% else %}
+            <td>Not Exist</td>
+        {% endif %}
+        {% if 'Not Exist' not in local_result.linkedinurl %}
+        <td> <a href="{{ local_result.linkedinurl }}">{{ local_result.linkedinurl }}</a> </td>
+        {% else %}
+            <td>Not Exist</td>
+        {% endif %}
+    </tr>
 </table>
 
-{% for a, b in online_result.items %}
+<table id="company_online">
+    <caption>Remote Data (DBPedia)</caption>
+    <tr>
+        <th>Topic</th>
+        <td>{{ online_result.topic }}</td>
+    </tr>
+    <tr>
+        <th>Wiki Page</th>
+        <td>{{ online_result.wikipageid }}</td>
+    </tr>
+    <tr>
+        <th>Latitude</th>
+        <td>{{ online_result.latitude }}</td>
+    </tr>
+    <tr>
+        <th>Longitude</th>
+        <td>{{ online_result.longitude }}</td>
+    </tr>
+    <tr>
+        <th>Abstract</th>
+        <td>{{ online_result.abstract }}</td>
+    </tr>
+    <tr>
+        <th>Assets</th>
+        <td>{{ online_result.assets }}</td>
+    </tr>
+    <tr>
+        <th>Equity</th>
+        <td>{{ online_result.equity }}</td>
+    </tr>
+    <tr>
+        <th>Location</th>
+        <td>{{ online_result.location }}</td>
+    </tr>
+    <tr>
+        <th>Net Income</th>
+        <td>{{ online_result.netincome }}</td>
+    </tr>
+    <tr>
+        <th>Operating Income</th>
+        <td>{{ online_result.operatingincome }}</td>
+    </tr>
+    <tr>
+        <th>Revenue</th>
+        <td>{{ online_result.revenue }}</td>
+    </tr>
+    <tr>
+        <th>Area Served</th>
+        <td>{{ online_result.areaserved }}</td>
+    </tr>
+    
+</table>
+    
+    {% comment %} {% for a, b in online_result.items %}
      {{ a }}  &nbsp {{ b }} <br>
-{% endfor %}
+    {% endfor %} {% endcomment %}
 
 </body>
 </html>
