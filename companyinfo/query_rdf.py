@@ -8,20 +8,6 @@ from SPARQLWrapper import SPARQLWrapper, JSON
 # g = ConjunctiveGraph('Sleepycat')
 g = ConjunctiveGraph()
 
-
-# def getCompanyDataOnline(param):
-#     sparql = SPARQLWrapper("http://dbpedia.org/sparql")
-#     sparql.setQuery("""
-#     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-#     SELECT (lcase(str(?s)) as ?name) (str(?p) as ?pred)  (str(?o) as ?obj)
-#     WHERE { ?s a dbo:Company .
-#             ?s ?p ?o .
-#             FILTER ( lcase(str(?s)) = 'http://dbpedia.org/resource/""" + str(param) + """' )} """)
-            
-#     sparql.setReturnFormat(JSON)
-#     results = sparql.query().convert()
-#     return results
-
 def getCompanyDataOnline(param, web):
     param  = str(param).replace(' ','_')
     sparql = SPARQLWrapper("http://dbpedia.org/sparql")
@@ -41,8 +27,9 @@ def getCompanyDataOnline(param, web):
            (str(?result_operatingincome) as ?str_operatingincome)
            (str(?result_revenue) as ?str_revenue)
            (str(?result_areaserved) as ?str_areaserved)
+           (str(?result_thumbnail) as ?str_thumbnail)
     WHERE { ?s a dbo:Company .
-            BIND('Not Exist' as ?default_string)
+            BIND('-' as ?default_string)
             BIND( 0 as ?default_number)
             OPTIONAL {?s <http://xmlns.com/foaf/0.1/isPrimaryTopicOf> ?topic .}
             OPTIONAL {?s <http://dbpedia.org/ontology/wikiPageID> ?wikipageid .}
@@ -57,6 +44,7 @@ def getCompanyDataOnline(param, web):
             OPTIONAL {?s <http://dbpedia.org/ontology/revenue> ?revenue .}
             OPTIONAL {?s <http://dbpedia.org/property/areaServed> ?areaserved .}
             OPTIONAL {?s foaf:homepage ?website .}
+            OPTIONAL {?s <http://dbpedia.org/ontology/thumbnail> ?thumb .}
             BIND(REPLACE(STR(?website), "https://www.", "", "i") AS ?homepage1)
             BIND(REPLACE(STR(?homepage1), "http://www.", "", "i") AS ?homepage2)
             BIND(REPLACE(STR(?homepage2), "https://", "", "i") AS ?homepage3)
@@ -73,6 +61,7 @@ def getCompanyDataOnline(param, web):
             BIND(COALESCE(?operatingincome, ?default_number) as ?result_operatingincome)
             BIND(COALESCE(?revenue, ?default_number) as ?result_revenue)
             BIND(COALESCE(?areaserved, ?default_string) as ?result_areaserved)
+            BIND(COALESCE(?thumb, ?default_string) as ?result_thumbnail)
             FILTER (lang(?abstract) = 'en')
             FILTER ( lcase(str(?s)) = 'http://dbpedia.org/resource/""" + param + """' || lcase(?homepage_clean) = '""" + web + """')} LIMIT 1""")
 
@@ -85,6 +74,7 @@ def getCompanyData(param):
     # g.open('companyinfo/company', create=False)
     g.parse('companyinfo/companies_sorted_1000.ntriples', format='nt')
 
+   
     company_id = '<http://globalcompany.org/' + param + '>'
 
     stringquery = """SELECT (str(?name_label) as ?str_name_label) 
@@ -97,7 +87,7 @@ def getCompanyData(param):
                             (str(?result_total) as ?str_total)
                             (str(?result_linkedin) as ?linkedinurl)
                             (str(?result_domain) as ?domainurl)
-                    WHERE { BIND('Not Exist' as ?default_string)
+                    WHERE { BIND('-' as ?default_string)
                             """ + company_id + """ <http://globalcompany.org/hasName> ?name .
                             OPTIONAL {""" + company_id + """ <http://globalcompany.org/hasOfficialWebsite> ?domain .}
                             """ + company_id + """ <http://globalcompany.org/isIndustry> ?industry .

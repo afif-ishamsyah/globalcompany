@@ -2,6 +2,11 @@
 <html>
 <head>
     <style>
+
+    #capital{
+    text-transform: capitalize;
+    }
+
     #company {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     border-collapse: collapse;
@@ -46,8 +51,8 @@
     </tr>
     {% for value in qres %}
     <tr>
-        <td> <a href="{% url 'info' value.id %}">{{ value.str_name_label }}</a> </td>
-        <td> {{ value.str_country_label }} </td>
+        <td id="capital"> <a href="{% url 'info' value.id %}">{{ value.str_name_label }}</a> </td>
+        <td id="capital"> {{ value.str_country_label }} </td>
         <td> <a href="{{ value.linkedinurl }}">{{ value.linkedinurl }}</a> </td>
     </tr>
     {% endfor %}

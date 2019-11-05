@@ -51,6 +51,8 @@
 </head>
 <body>
 
+<img src="{{ online_result.thumbnail }}">
+
 <table id="company">
 <caption>Local Data</caption>
     <tr>
@@ -91,7 +93,7 @@
     <caption>Remote Data (DBPedia)</caption>
     <tr>
         <th>Topic</th>
-        <td>{{ online_result.topic }}</td>
+        <td><a href="{{ online_result.topic }}">{{ online_result.topic }}</a></td>
     </tr>
     <tr>
         <th>Wiki Page</th>
@@ -139,10 +141,6 @@
     </tr>
     
 </table>
-    
-    {% comment %} {% for a, b in online_result.items %}
-     {{ a }}  &nbsp {{ b }} <br>
-    {% endfor %} {% endcomment %}
 
 </body>
 </html>
