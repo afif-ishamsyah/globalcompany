@@ -1,12 +1,5 @@
-import rdflib
-from rdflib.store import NO_STORE, VALID_STORE
-from rdflib import plugin, ConjunctiveGraph
-from rdflib.store import Store
 import sys
 from SPARQLWrapper import SPARQLWrapper, JSON
-
-# g = ConjunctiveGraph('Sleepycat')
-g = ConjunctiveGraph()
 
 def getCompanyDataOnline(param, web):
     param  = str(param).replace(' ','_')
@@ -71,13 +64,13 @@ def getCompanyDataOnline(param, web):
     return results
 
 def getCompanyData(param):
-    # g.open('companyinfo/company', create=False)
-    g.parse('companyinfo/companies_sorted_1000.ntriples', format='nt')
-
-   
     company_id = '<http://globalcompany.org/' + param + '>'
 
-    stringquery = """SELECT (str(?name_label) as ?str_name_label) 
+    sparql = SPARQLWrapper("http://localhost:3030/company/sparql")
+    sparql.setQuery("""
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+    SELECT (str(?name_label) as ?str_name_label) 
                             (str(?result_country) as ?str_country_label)
                             (str(?result_industry) as ?str_industry_label)
                             (str(?result_year) as ?str_year)
@@ -98,10 +91,10 @@ def getCompanyData(param):
                             OPTIONAL {""" + company_id + """ <http://globalcompany.org/current_employee> ?current .}
                             OPTIONAL {""" + company_id + """ <http://globalcompany.org/total_employee_estimate> ?total .}
                             OPTIONAL {""" + company_id + """ <http://globalcompany.org/yearFound> ?year .  }
-                            ?name <rdfs:label> ?name_label .
-                            OPTIONAL {?country <rdfs:label> ?country_label .}
-                            OPTIONAL {?industry <rdfs:label> ?industry_label .}
-                            OPTIONAL {?locality <rdfs:label> ?locality_label .}
+                            ?name rdfs:label ?name_label .
+                            OPTIONAL {?country rdfs:label ?country_label .}
+                            OPTIONAL {?industry rdfs:label ?industry_label .}
+                            OPTIONAL {?locality rdfs:label ?locality_label .}
                             BIND(COALESCE(?domain, ?default_string) as ?result_domain)
                             BIND(COALESCE(?industry_label, ?default_string) as ?result_industry)
                             BIND(COALESCE(?size, ?default_string) as ?result_size)
@@ -111,48 +104,47 @@ def getCompanyData(param):
                             BIND(COALESCE(?current, ?default_string) as ?result_current)
                             BIND(COALESCE(?total, ?default_string) as ?result_total)
                             BIND(COALESCE(?year, ?default_string) as ?result_year)}
-                            LIMIT 1"""
+                            LIMIT 1""")
 
-    qres = g.query(stringquery)
-    val = qres
-    g.close()
-    return val
+    sparql.setReturnFormat(JSON)
+    results = sparql.query().convert()
+    return results
 
 def getAllCompany():
-    # g.open('companyinfo/company', create=False)
-    g.parse('companyinfo/companies_sorted_1000.ntriples', format='nt')
-
-    stringquery = """SELECT (str(?sub_label) as ?id) (str(?name_label) as ?str_name_label) (str(?country_label) as ?str_country_label) ?linkedinurl
+    sparql = SPARQLWrapper("http://localhost:3030/company/sparql")
+    sparql.setQuery("""
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+    SELECT (str(?sub_label) as ?id) (str(?name_label) as ?str_name_label) (str(?country_label) as ?str_country_label) ?linkedinurl
                     WHERE { ?sub <http://globalcompany.org/hasName> ?name .
                             ?sub <http://globalcompany.org/locatedInCountry> ?country .
                             ?sub <http://globalcompany.org/hasLinkedinURL> ?linkedin .
-                            ?sub <rdfs:label> ?sub_label .
-                            ?name <rdfs:label> ?name_label .
-                            ?country <rdfs:label> ?country_label .
+                            ?sub rdfs:label ?sub_label .
+                            ?name rdfs:label ?name_label .
+                            ?country rdfs:label ?country_label .
                             BIND(CONCAT("https://", STR( ?linkedin )) AS ?linkedinurl)
-                            } ORDER BY ASC(?str_name_label)"""
+                            } ORDER BY ASC(?str_name_label)""")
 
-    qres = g.query(stringquery)
-    val = qres
-    g.close()
-    return val
+    sparql.setReturnFormat(JSON)
+    results = sparql.query().convert()
+    return results
 
 def getSomeCompany(param):
-    # g.open('companyinfo/company', create=False)
-    g.parse('companyinfo/companies_sorted_1000.ntriples', format='nt')
-
-    stringquery = """SELECT (str(?sub_label) as ?id) (str(?name_label) as ?str_name_label) (str(?country_label) as ?str_country_label) ?linkedinurl
+    sparql = SPARQLWrapper("http://localhost:3030/company/sparql")
+    sparql.setQuery("""
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+    SELECT (str(?sub_label) as ?id) (str(?name_label) as ?str_name_label) (str(?country_label) as ?str_country_label) ?linkedinurl
                     WHERE { ?sub <http://globalcompany.org/hasName> ?name .
                             ?sub <http://globalcompany.org/locatedInCountry> ?country .
                             ?sub <http://globalcompany.org/hasLinkedinURL> ?linkedin .
-                            ?sub <rdfs:label> ?sub_label .
-                            ?name <rdfs:label> ?name_label .
-                            ?country <rdfs:label> ?country_label .
+                            ?sub rdfs:label ?sub_label .
+                            ?name rdfs:label ?name_label .
+                            ?country rdfs:label ?country_label .
                             FILTER regex(str(?name_label), '""" + str(param) + """', 'i')
                             BIND(CONCAT("https://", STR( ?linkedin )) AS ?linkedinurl)
-                            } ORDER BY ASC(?str_name_label)"""
+                            } ORDER BY ASC(?str_name_label)""")
 
-    qres = g.query(stringquery)
-    val = qres
-    g.close()
-    return val
+    sparql.setReturnFormat(JSON)
+    results = sparql.query().convert()
+    return results

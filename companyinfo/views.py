@@ -7,35 +7,23 @@ from django.core.paginator import Paginator, EmptyPage, InvalidPage
 def index(request):
     return render(request, 'companyinfo/index.html')
 
-# def search(request):
-#     param = request.GET['companyname']
-#     qres = getSomeCompany(param)
 
-#     listCompany = []
-#     for value in qres:
-#         listCompany.append(value)
-
-#     paginator = Paginator(listCompany, 25)
-
-#     page = request.GET.get('page')
-#     company = paginator.get_page(page)
-
-#     return render(request, 'companyinfo/company_list.html', {'company': company, 'param': param})
 
 def search(request):
-    param = request.GET['companyname']
-    qres = getSomeCompany(param)
-
-    listCompany = []
-    for value in qres:
-        listCompany.append(value)
-
-    paginator = Paginator(listCompany, 25)
 
     try:
         page = int(request.GET.get('page', '1'))
     except:
         page = 1
+
+    param = request.GET['companyname']
+    qres = getSomeCompany(param)
+
+    listCompany = []
+    for value in qres["results"]["bindings"]:
+        listCompany.append({'id': value["id"]["value"], 'name': value["str_name_label"]["value"], 'country': value["str_country_label"]["value"], 'linkedin': value["linkedinurl"]["value"]  })
+
+    paginator = Paginator(listCompany, 25)
 
     try:
         company = paginator.page(page)
@@ -58,25 +46,25 @@ def info(request, rdf_object):
     web = ''
     qres = getCompanyData(rdf_object)
 
-    for row in qres:
-        name = row.str_name_label
-        local_result['name'] = str(row.str_name_label).title()
-        local_result['country_label'] = row.str_country_label
-        local_result['industry_label'] = row.str_industry_label
-        local_result['year'] = row.str_year
-        local_result['size'] = row.str_size
-        local_result['locality_label'] = row.str_locality_label
-        local_result['current'] = row.str_current
-        local_result['total'] = row.str_total
+    for row in qres["results"]["bindings"]:
+        name = row["str_name_label"]["value"]
+        local_result['name'] = str(row["str_name_label"]["value"]).title()
+        local_result['country_label'] = row["str_country_label"]["value"]
+        local_result['industry_label'] = row["str_industry_label"]["value"]
+        local_result['year'] = row["str_year"]["value"]
+        local_result['size'] = row["str_size"]["value"]
+        local_result['locality_label'] = row["str_locality_label"]["value"]
+        local_result['current'] = row["str_current"]["value"]
+        local_result['total'] = row["str_total"]["value"]
         local_result['linkedinurl'] = ''
-        if(str(row.linkedinurl) != ''):
-            local_result['linkedinurl'] = 'https://' + str(row.linkedinurl)
+        if(str(row["linkedinurl"]["value"]) != '-'):
+            local_result['linkedinurl'] = 'https://' + str(row["linkedinurl"]["value"])
 
         local_result['domainurl'] = ''
-        if(str(row.domainurl) != ''):
-            local_result['domainurl'] = 'https://' + str(row.domainurl)
+        if(str(row["domainurl"]["value"]) != '-'):
+            local_result['domainurl'] = 'https://' + str(row["domainurl"]["value"])
 
-        web = str(row.domainurl)
+        web = str(row["domainurl"]["value"])
 
     qresonline = getCompanyDataOnline(name, web)
     
@@ -88,7 +76,7 @@ def info(request, rdf_object):
         online_result['abstract'] = result["str_abstract"]["value"]
         online_result['assets'] = '${:,.2f}'.format(float(result["str_assets"]["value"]))
         online_result['equity'] = '${:,.2f}'.format(float(result["str_equity"]["value"]))
-        online_result['location'] = str(result["str_location"]["value"]).split("/")[-1]
+        online_result['location'] = str(result["str_location"]["value"]).split("/")[-1].replace('_',' ')
         online_result['netincome'] = '${:,.2f}'.format(float(result["str_netincome"]["value"]))
         online_result['operatingincome'] = '${:,.2f}'.format(float(result["str_operatingincome"]["value"]))
         online_result['revenue'] = '${:,.2f}'.format(float(result["str_revenue"]["value"]))

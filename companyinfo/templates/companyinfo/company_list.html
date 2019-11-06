@@ -50,9 +50,9 @@
     </tr>
     {% for value in company %}
     <tr>
-        <td id="capital"> <a href="{% url 'info' value.id %}">{{ value.str_name_label }}</a> </td>
-        <td id="capital"> {{ value.str_country_label }} </td>
-        <td> <a href="{{ value.linkedinurl }}">{{ value.linkedinurl }}</a> </td>
+        <td id="capital"> <a href="{% url 'info' value.id %}">{{ value.name }}</a> </td>
+        <td id="capital"> {{ value.country }} </td>
+        <td> <a href="{{ value.linkedin }}">{{ value.linkedin }}</a> </td>
     </tr>
     {% endfor %}
     </table>
