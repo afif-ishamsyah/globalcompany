@@ -2,15 +2,54 @@ from django.http import HttpResponse
 from companyinfo.query_rdf import getCompanyData, getAllCompany, getSomeCompany, getCompanyDataOnline
 from .models import Question
 from django.shortcuts import render
+from django.core.paginator import Paginator, EmptyPage, InvalidPage
 
 def index(request):
-    qres = getAllCompany()
-    return render(request, 'companyinfo/index.html', {'qres': qres})
+    return render(request, 'companyinfo/index.html')
+
+# def search(request):
+#     param = request.GET['companyname']
+#     qres = getSomeCompany(param)
+
+#     listCompany = []
+#     for value in qres:
+#         listCompany.append(value)
+
+#     paginator = Paginator(listCompany, 25)
+
+#     page = request.GET.get('page')
+#     company = paginator.get_page(page)
+
+#     return render(request, 'companyinfo/company_list.html', {'company': company, 'param': param})
 
 def search(request):
-    param = request.POST['companyname']
+    param = request.GET['companyname']
     qres = getSomeCompany(param)
-    return render(request, 'companyinfo/index.html', {'qres': qres})
+
+    listCompany = []
+    for value in qres:
+        listCompany.append(value)
+
+    paginator = Paginator(listCompany, 25)
+
+    try:
+        page = int(request.GET.get('page', '1'))
+    except:
+        page = 1
+
+    try:
+        company = paginator.page(page)
+    except(EmptyPage, InvalidPage):
+        company = paginator.page(1)
+
+    index = company.number - 1  
+    max_index = len(paginator.page_range)
+    start_index = index - 3 if index >= 3 else 0
+    end_index = index + 3 if index <= max_index - 3 else max_index
+    page_range = list(paginator.page_range)[start_index:end_index]
+
+    return render(request, 'companyinfo/company_list.html', {'company': company, 'page_range': page_range, 'param': param}
+)
 
 def info(request, rdf_object):
     local_result = {}

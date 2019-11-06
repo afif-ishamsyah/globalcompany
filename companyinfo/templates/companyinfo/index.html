@@ -35,29 +35,13 @@
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
 <div>
-    <form action="{% url 'search' %}" method="post">
-        {% csrf_token %}
+    <form action="{% url 'search' %}" method="get">
         <input type="text" name="companyname">    
         <input type="submit" value="Search Company">
     </form>
 </div>
-<br>
-<div>
-    <table id="company">
-    <tr>
-        <th>Company Name</th>
-        <th>Country</th>
-        <th>Linkedin Link</th>
-    </tr>
-    {% for value in qres %}
-    <tr>
-        <td id="capital"> <a href="{% url 'info' value.id %}">{{ value.str_name_label }}</a> </td>
-        <td id="capital"> {{ value.str_country_label }} </td>
-        <td> <a href="{{ value.linkedinurl }}">{{ value.linkedinurl }}</a> </td>
-    </tr>
-    {% endfor %}
-    </table>
-</div>
+
+<h1>Ganti search diatas dengan Big Search</h1>
 
 </body>
 </html>
