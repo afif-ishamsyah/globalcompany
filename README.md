@@ -3,9 +3,10 @@ Web Semantic (2019) Project Assignment
 
 How to Use
 I. Data
-1. Get data source from https://www.kaggle.com/peopledatalabssf/free-7-million-company-dataset. The file is in CSV format.
+1. Get data source from https://www.kaggle.com/peopledatalabssf/free-7-million-company-dataset. 
+2. You will get a zip folder. Extract it, and you will get a CSV file. The name file should be companies-sorted.csv. DONT RENAME IT
 2. Open rdfscript folder, copy/cut the CSV file there. 
-3. Run convert.py with python. You will get 50.000 data sample from the CSV as a RDF file. The file name should be companies_sorted.nt.
+3. Run convert.py with python. You will get 50.000 data sample from the CSV as a RDF file. The file name should be companies_sorted.nt. DONT CHANGE IT
 
 II. Fuseki
 1. Download fuseki from https://jena.apache.org/download/. Choose apache-jena-fuseki-*version*.zip.
