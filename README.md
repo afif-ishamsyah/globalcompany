@@ -1,7 +1,7 @@
 # globalcompany
 Web Semantic (2019) Project Assignment
 
-How to Use :
+How to Use (after you clone this git) :
 
 I. Data
 1. Get data source from https://www.kaggle.com/peopledatalabssf/free-7-million-company-dataset. 
