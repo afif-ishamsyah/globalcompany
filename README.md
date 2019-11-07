@@ -11,7 +11,18 @@ I. Data
 
 II. Fuseki
 1. Download fuseki from https://jena.apache.org/download/. Choose apache-jena-fuseki-*version*.zip.
-2. Extract zip file, open the folder.
+2. Extract zip file, open the folder. You can place the folder you extracted everywhere. However, it is recommended to be put as shown below.
+```
+|-apache-jena-fuseki-3.13.1
+|--fuseki-server.bat
+|-companyinfo
+|-globalcompany
+|-rdfscript
+|-.gitignore
+|-db.sqlite3
+|-manage.py
+|-README.md
+```
 3. Run with cmd : fuseki-server.bat. Make sure your system have java and the cmd recognized java command.
 4. Open browser, go to localhost:3030. You will get a fuseki homepage.
 5. Go to "manage dataset", create new dataset with name "company". Choose "TDB2" Presistence
