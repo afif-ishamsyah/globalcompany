@@ -24,3 +24,5 @@ III. Django
 5. Pay attention on the locahost port given by manage.py. Usually it use localhost:8000
 6. Go to url : localhost:port/companyinfo/
 7. Search a company. Enjoy
+
+Credits : https://github.com/r4isstatic/csv-to-ttl/blob/master/csv-ttl-convert-v1.py as template to convert csv to ntriples
