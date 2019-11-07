@@ -1,7 +1,7 @@
 # globalcompany
 Web Semantic (2019) Project Assignment
 
-How to Use (after you clone this git) :
+How to use (after you clone this git) :
 
 I. Data
 1. Get data source from https://www.kaggle.com/peopledatalabssf/free-7-million-company-dataset. 
@@ -18,12 +18,12 @@ II. Fuseki
 6. With the "company" dataset, click on "upload data", and find your companies_sorted.nt. Wait until it finish uploading. It should give upload complete feedback.
 
 III. Django
-1. Open anaconda prompt
-2. Make sure you have these libraries : django and SPARQLWrapper
-3. Enter directory /globalcompany
-4. Run command : python manage.py runserver
-5. Pay attention on the locahost port given by manage.py. Usually it use localhost:8000
-6. Go to url : localhost:port/companyinfo/
-7. Search a company. Enjoy
+1. Open anaconda prompt.
+2. Make sure you have these libraries : django and SPARQLWrapper.
+3. Enter directory /globalcompany.
+4. Run command : python manage.py runserver.
+5. Pay attention on the locahost port given by manage.py. Usually it use localhost:8000.
+6. Go to url : localhost:port/companyinfo/.
+7. Search a company. Enjoy.
 
-Credits : https://github.com/r4isstatic/csv-to-ttl/blob/master/csv-ttl-convert-v1.py as template to convert csv to ntriples
+Credits : https://github.com/r4isstatic/csv-to-ttl/blob/master/csv-ttl-convert-v1.py as template to convert csv to ntriples.
