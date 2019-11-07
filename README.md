@@ -1,7 +1,8 @@
 # globalcompany
 Web Semantic (2019) Project Assignment
 
-How to Use
+How to Use :
+
 I. Data
 1. Get data source from https://www.kaggle.com/peopledatalabssf/free-7-million-company-dataset. 
 2. You will get a zip folder. Extract it, and you will get a CSV file. The name file should be companies-sorted.csv. DONT RENAME IT
