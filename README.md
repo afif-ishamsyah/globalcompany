@@ -15,7 +15,7 @@ II. Fuseki
 5. Go to "manage dataset", create new dataset with name "company". Choose "TDB2" Presistence
 6. With the "company" dataset, click on "upload data", and find your companies_sorted.nt. Wait until it finish uploading. It should give upload complete feedback.
 
-III
+III. Django
 1. Open anaconda prompt
 2. Make sure you have these libraries : django and SPARQLWrapper
 3. Enter directory /globalcompany
