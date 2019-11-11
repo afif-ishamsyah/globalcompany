@@ -1,53 +1,12 @@
-<!DOCTYPE html>
-<html>
+{% load static %}
+<!doctype html>
+<html lang="en">
 <head>
-    <style>
-    #company {
-    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-    }
-
-    #company td, #customers th {
-    border: 1px solid #ddd;
-    padding: 8px;
-    }
-
-    #company tr:nth-child(even){background-color: #f2f2f2;}
-
-    #company tr:hover {background-color: #ddd;}
-
-    #company th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: left;
-    background-color: #4CAF50;
-    color: white;
-    }
-
-    #company_online {
-    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-    }
-
-    #company_online td, #customers th {
-    border: 1px solid #ddd;
-    padding: 8px;
-    }
-
-    #company_online tr:nth-child(even){background-color: #f2f2f2;}
-
-    #company_online tr:hover {background-color: #ddd;}
-
-    #company_online th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: left;
-    background-color: #af584c;
-    color: white;
-    }
-    </style>
+    <title>CompaniesSearch</title>
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous"/>
+    <link href="{% static 'css/company_details.css' %}" rel="stylesheet" type="text/css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
 </head>
 <body>
 

@@ -17,13 +17,20 @@ def search(request):
         page = 1
 
     param = request.GET['companyname']
+    queries = ""
+    query = param.split(" ")
+    for i in range(0,len(query)):
+        queries += query[i]+" "
+    # print(queries)
+    print(param)
+
     qres = getSomeCompany(param)
 
     listCompany = []
     for value in qres["results"]["bindings"]:
         listCompany.append({'id': value["id"]["value"], 'name': value["str_name_label"]["value"], 'country': value["str_country_label"]["value"], 'linkedin': value["linkedinurl"]["value"]  })
 
-    paginator = Paginator(listCompany, 25)
+    paginator = Paginator(listCompany, 24)
 
     try:
         company = paginator.page(page)
@@ -36,7 +43,7 @@ def search(request):
     end_index = index + 3 if index <= max_index - 3 else max_index
     page_range = list(paginator.page_range)[start_index:end_index]
 
-    return render(request, 'companyinfo/company_list.html', {'company': company, 'page_range': page_range, 'param': param}
+    return render(request, 'companyinfo/company_list.html', {'company': company, 'page_range': page_range, 'param': param, 'total_results':len(listCompany), 'query':param+""}
 )
 
 def info(request, rdf_object):

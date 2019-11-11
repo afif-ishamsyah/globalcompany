@@ -1,47 +1,30 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <style>
+{% load static %}
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>CompaniesSearch</title>
+        <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous"/>
+        <link href="{% static 'css/index.css' %}" rel="stylesheet" type="text/css">
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
-    #capital{
-    text-transform: capitalize;
-    }
-
-    #company {
-    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-    }
-
-    #company td, #customers th {
-    border: 1px solid #ddd;
-    padding: 8px;
-    }
-
-    #company tr:nth-child(even){background-color: #f2f2f2;}
-
-    #company tr:hover {background-color: #ddd;}
-
-    #company th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: left;
-    background-color: #4CAF50;
-    color: white;
-    }
-    </style>
-</head>
-<body>
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-
-<div>
-    <form action="{% url 'search' %}" method="get">
-        <input type="text" name="companyname">    
-        <input type="submit" value="Search Company">
-    </form>
-</div>
-
-<h1>Ganti search diatas dengan Big Search</h1>
-
-</body>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6 center" style="text-align: center;">
+                    <img src="{% static 'homeicon.png' %}" width="50%" />
+                    <form type="get" action="{% url 'search' %}" style="margin: 0">
+                        <input id="search_box" type="text" name="companyname" placeholder="Search company name or by country...">
+                        <select name="categories" id="custom-select">
+                            <option value="companyname">Search by Company Name</option>
+                            <option value="country">Search by Country</option>
+                        </select>
+                        <input id="search_submit" type="submit" value="Search">
+                    </form> 
+                </div>
+            </div>
+        </div>
+    </body>
 </html>
