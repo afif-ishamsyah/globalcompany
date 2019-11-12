@@ -1,0 +1,84 @@
+@prefix gco: <https://globalcompany.org/ns#> .
+@prefix gcor: <https://globalcompany.org/resource/> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+#############################
+# ontology metadata
+#############################
+
+<https://globalcompany.org/ns> a owl:Ontology .
+<https://globalcompany.org/ns> dct:title "Global Company Ontology"@en .
+<https://globalcompany.org/ns> dct:description "An ontology for Global Company all over the world"@en .
+<https://globalcompany.org/ns> dct:creator [ rdfs:label "Afif Ishamsyah Hantriono" ] .
+<https://globalcompany.org/ns> dct:creator [ rdfs:label "Jessica Naraiswari" ] .
+<https://globalcompany.org/ns> dct:creator [ rdfs:label "Syifa Nurhayati" ] .
+<https://globalcompany.org/ns> dct:creator [ rdfs:label "Zhany Math" ] .
+
+#############################
+# ontology classes
+#############################
+
+gco:GlobalCompany a rdfs:Class .
+gco:GlobalCompany rdfs:label "Global Company"@en .
+
+gco:Industry a rdfs:Class .
+gco:Industry a rdfs:label "Industry"@en .
+
+gco:City a rdfs:Class .
+gco:City rdfs:label "City"@en .
+
+gco:State a rdfs:Class .
+gco:State rdfs:label "State"@en .
+
+gco:Country a rdfs:Class .
+gco:Country rdfs:label "Country"@en .
+
+#############################
+# ontology properties
+#############################
+
+gco:hasOfficialWebsite a rdf:Property .
+gco:hasOfficialWebsite rdfs:label "has official website"@en .
+gco:hasOfficialWebsite rdfs:range gco:URL .
+
+gco:yearFound a rdf:Property .
+gco:yearFound rdfs:label "year found"@en .
+
+gco:isIndustry a rdfs:Property .
+gco:isIndustry rdfs:label "is industry"@en .
+gco:isIndustry rdfs:range gco:Industry .
+
+gco:hasSizeRange a rdf:Property .
+gco:hasSizeRange rdf:label "has size range"@en .
+
+gco:state a rdf:Property .
+gco:state rdfs:label "state"@en .
+gco:state rdfs:range gco:State .
+
+gco:country a rdf:Property .
+gco:country rdfs:label "country"@en .
+gco:country rdfs:range gco:Country .
+
+gco:locatedInCity a rdf:Property .
+gco:locatedInCity rdfs:label "located in city"@en .
+gco:locatedInCity rdfs:range gco:City .
+
+gco:locatedInState a rdf:Property .
+gco:locatedInState rdfs:label "located in state"@en .
+gco:locatedInState rdfs:range gco:State .
+
+gco:locatedInCountry a rdf:Property .
+gco:locatedInCountry rdfs:label "located in country"@en .
+gco:locatedInCountry rdfs:range gco:Country .
+
+gco:hasLinkedinURL a rdf:Property .
+gco:hasLinkedinURL rdfs:label "has linkedin URL"@en .
+
+gco:hasCurrentEmployee a rdf:Property .
+gco:hasCurrentEmployee rdf:label "has current employee"@en .
+
+gco:hasTotalEmployeeEstimate a rdf:Property .
+gco:hasTotalEmployeeEstimate rdf:label "has total employee"@en .
