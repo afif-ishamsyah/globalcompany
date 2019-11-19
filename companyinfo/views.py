@@ -90,4 +90,4 @@ def info(request, rdf_object):
         online_result['areaserved'] = result["str_areaserved"]["value"]
         online_result['thumbnail'] = result["str_thumbnail"]["value"]
 
-    return render(request, 'companyinfo/company_details.html', {'local_result': local_result, 'online_result': online_result})
+    return render(request, 'companyinfo/company_details_alt.html', {'local_result': local_result, 'online_result': online_result})

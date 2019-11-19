@@ -9,6 +9,18 @@
     padding: 8px;
 }
 
+#short-info {
+    border-bottom: 1px solid #C1C1C3; 
+}
+
+#header {
+    margin-top: 30px;
+}
+
+form {
+    margin-top: -50px;
+}
+
 #company tr:nth-child(even){background-color: #f2f2f2;}
 
 #company tr:hover {background-color: #ddd;}
@@ -43,3 +55,4 @@
     background-color: #af584c;
     color: white;
 }
+
