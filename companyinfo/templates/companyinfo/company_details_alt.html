@@ -50,10 +50,10 @@
 							<p><img src="{{ online_result.thumbnail }}" width="500" alt="Picture of {{ local_result.name }}" /></p>
 							{% if 'Not Exist' not in online_result.abstract %}
 							<p>{{ online_result.abstract }}</p>
+							{% elif 'Not Exist' not in local_result.linkedinurl %}
+							<p>Further information about {{ local_result.name }} cannot be found. Please proceed to <a href="{{ local_result.linkedinurl }}"> link about this company profile </a> to find further information.</p>
 							{% elif 'Not Exist' not in local_result.domainurl %}
 							<p>Further information about {{ local_result.name }} cannot be found. Please proceed to <a href="{{ local_result.domainurl }}"> link about this company </a> to find further information.</p>
-							{% elif 'Not Exist' not in local_result.linkedinurl %}
-							<p>Further information about {{ local_result.name }} cannot be found. Please proceed to <a href="{{ local_result.linkedinurl }}"> link about this company </a> to find further information.</p>
 							{% endif %}
 							<br>
 							
