@@ -17,12 +17,6 @@ def search(request):
         page = 1
 
     param = request.GET['companyname']
-    queries = ""
-    query = param.split(" ")
-    for i in range(0,len(query)):
-        queries += query[i]+" "
-    # print(queries)
-    print(param)
 
     qres = getSomeCompany(param)
 

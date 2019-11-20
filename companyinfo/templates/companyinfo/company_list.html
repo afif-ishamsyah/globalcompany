@@ -19,7 +19,7 @@
                 <form action="{% url 'search' %}" method="get">
                     <img src="{% static 'homeicon.png' %}" width="10%" />
                     {% if query is not None %}
-                        <input  id="search_box" type="text" name="companyname"  placeholder="Search company name..." value = {{ param }}>
+                        <input  id="search_box" type="text" name="companyname"  placeholder="Search company name..." value ="{{ param }}">
                     {% else %}
                         <input  id="search_box" type="text" name="companyname"  placeholder="Search company name...">
                     {% endif %}
