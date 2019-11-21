@@ -8,7 +8,7 @@
     z-index: 5;
 }
 
-input#search_box:hover {
+input#search_box:hover, input#search_box:active, input#search_box:focus {
     box-shadow: 0 0 15px lightslategrey;
 }
 

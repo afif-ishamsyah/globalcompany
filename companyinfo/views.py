@@ -22,7 +22,8 @@ def search(request):
 
     listCompany = []
     for value in qres["results"]["bindings"]:
-        listCompany.append({'id': value["id"]["value"], 'name': value["str_name_label"]["value"], 'country': value["str_country_label"]["value"], 'linkedin': value["linkedinurl"]["value"]  })
+        image = getImageThumbnail(value["id"]["value"])
+        listCompany.append({'id': value["id"]["value"], 'name': value["str_name_label"]["value"], 'country': value["str_country_label"]["value"], 'linkedin': value["linkedinurl"]["value"], 'img_thumbnail': image  })
 
     paginator = Paginator(listCompany, 24)
 
@@ -39,6 +40,21 @@ def search(request):
 
     return render(request, 'companyinfo/company_list.html', {'company': company, 'page_range': page_range, 'param': param, 'total_results':len(listCompany), 'query':param+""}
 )
+
+def getImageThumbnail(rdf_object):
+    name = ''
+    web = ''
+    qres = getCompanyData(rdf_object)
+
+    for row in qres["results"]["bindings"]:
+        name = row["str_name_label"]["value"]
+        web = str(row["domainurl"]["value"])
+
+    qresonline = getCompanyDataOnline(name, web)
+    image = ""
+    for result in qresonline["results"]["bindings"]:
+        image = result["str_thumbnail"]["value"]
+    return image
 
 def info(request, rdf_object):
     local_result = {}

@@ -88,3 +88,15 @@ input#search_box:hover {
 form {
     margin-top: -50px;
 }
+
+.entry.abstract {
+    background-color: white; 
+    padding: 15px;
+}
+
+.entry.abstract h6{
+    font-style: italic;
+    font-size: smaller;
+    text-align: center;
+    text-transform: capitalize;
+}

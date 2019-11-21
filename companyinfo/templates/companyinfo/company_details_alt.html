@@ -42,12 +42,15 @@
 			<div id="page-bgbtm">
 				<div id="content">
 					<div class="post">
-						<h2 class="title"><a href="#">{{ local_result.name }} (company)</a></h2>
+						<h2 class="title"><a href="{{ local_result.linkedinurl }}">{{ local_result.name }} (company)</a></h2>
 						
-						<div class="entry" style="background-color: white; padding: 10px;">
-							<h6 style="font-style: italic;font-size: smaller;text-align: center;text-transform: capitalize;">Country: {{ local_result.country_label }}, Industry:{{ local_result.industry_label }}</h6>
+						<div class="entry abstract">
+							<h6>Country: {{ local_result.country_label }}, Industry:{{ local_result.industry_label }}</h6>
 							<br><br>
+
+							{% if 'Not Exist' not in online_result.thumbnail %}
 							<p><img src="{{ online_result.thumbnail }}" width="500" alt="Picture of {{ local_result.name }}" /></p>
+							{% endif %}
 							{% if 'Not Exist' not in online_result.abstract %}
 							<p>{{ online_result.abstract }}</p>
 							{% elif 'Not Exist' not in local_result.linkedinurl %}
@@ -92,7 +95,7 @@
 									{% endif %}
 									{% if 'Not Exist' not in local_result.locality_label %}
 									<tr>
-										<th>Locality:</th><td>{{ local_result.locality_label }}</td>
+										<th>Locality:</th><td style="text-transform: capitalize;">{{ local_result.locality_label }}</td>
 									</tr>
 									{% endif %}
 									{% if 'Not Exist' not in local_result.current %}

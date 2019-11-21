@@ -43,7 +43,11 @@
                 {% for value in company %}
                 <div class="col-4 py-3"> 
                     <div class="card" style="width: 18rem;height: 100%; padding: 3%;">
-                        <img src="http://commons.wikimedia.org/wiki/Special:FilePath/Amazon.com-Logo.svg?width=300" alt="No image found." height="100px" />
+                        {% if 'http' in value.img_thumbnail %}
+                        <img src="{{ value.img_thumbnail }}" alt="" height="100px" />
+                        {% else %}
+                        <img src="{% static 'image_not_found.jpg' %}" alt="" height="100px" />
+                        {% endif %}
                         <hr>
                         <h5 id="capital"><b><a href="{% url 'info' value.id %}">{{ value.name }}</a></b></h5>
                         <h6 id="capital"><b>Country: </b>{{ value.country }}</h6>
