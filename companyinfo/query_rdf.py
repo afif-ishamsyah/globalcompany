@@ -1,13 +1,13 @@
 import sys
 from SPARQLWrapper import SPARQLWrapper, JSON
 
-def getCompanyDataOnline(param, web):
-    param  = str(param).replace(' ','_')
+def getCompanyDataOnline(name, web):
+    name  = str(name).replace(' ','_')
     sparql = SPARQLWrapper("http://dbpedia.org/sparql")
     sparql.setQuery("""
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     PREFIX foaf: <http://xmlns.com/foaf/0.1/>
-    SELECT DISTINCT 
+    SELECT
            (str(?result_topic) as ?str_topic)
            (str(?result_wikipageid) as ?str_wikipageid)
            (str(?result_latitude) as ?str_latitude)
@@ -56,7 +56,31 @@ def getCompanyDataOnline(param, web):
             BIND(COALESCE(?areaserved, ?default_string) as ?result_areaserved)
             BIND(COALESCE(?thumb, ?default_string) as ?result_thumbnail)
             FILTER (lang(?abstract) = 'en')
-            FILTER ( lcase(str(?s)) = 'http://dbpedia.org/resource/""" + param + """' || lcase(?homepage_clean) = '""" + web + """')} LIMIT 1""")
+            FILTER ( lcase(str(?s)) = 'http://dbpedia.org/resource/""" + name + """' || lcase(?homepage_clean) = '""" + web + """')} LIMIT 1""")
+
+            
+    sparql.setReturnFormat(JSON)
+    results = sparql.query().convert()
+    return results
+
+def getThumbnail(name, web):
+    name  = str(name).replace(' ','_')
+    sparql = SPARQLWrapper("http://dbpedia.org/sparql")
+    sparql.setQuery("""
+    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+    PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+    SELECT 
+           (str(?result_thumbnail) as ?str_thumbnail)
+    WHERE { ?s a dbo:Company .
+            BIND('-' as ?default_string)
+            ?s <http://dbpedia.org/ontology/thumbnail> ?thumb .
+            OPTIONAL {?s foaf:homepage ?website .}
+            BIND(REPLACE(STR(?website), "https://www.", "", "i") AS ?homepage1)
+            BIND(REPLACE(STR(?homepage1), "http://www.", "", "i") AS ?homepage2)
+            BIND(REPLACE(STR(?homepage2), "https://", "", "i") AS ?homepage3)
+            BIND(REPLACE(STR(?homepage3), "http://", "", "i") AS ?homepage_clean)
+            BIND(COALESCE(?thumb, ?default_string) as ?result_thumbnail)
+            FILTER ( lcase(str(?s)) = 'http://dbpedia.org/resource/""" + name + """' || lcase(?homepage_clean) = '""" + web + """')} LIMIT 1""")
 
             
     sparql.setReturnFormat(JSON)
@@ -115,7 +139,7 @@ def getAllCompany():
     sparql.setQuery("""
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     PREFIX foaf: <http://xmlns.com/foaf/0.1/>
-    SELECT (str(?sub_label) as ?id) (str(?name_label) as ?str_name_label) (str(?country_label) as ?str_country_label) ?linkedinurl
+    SELECT (str(?sub_label) as ?id) (str(?name_label) as ?str_name_label) (str(?country_label) as ?str_country_label) ?linkedinurl 
                     WHERE { ?sub <http://globalcompany.org/hasName> ?name .
                             ?sub <http://globalcompany.org/locatedInCountry> ?country .
                             ?sub <http://globalcompany.org/hasLinkedinURL> ?linkedin .
@@ -134,15 +158,18 @@ def getSomeCompany(param):
     sparql.setQuery("""
     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
     PREFIX foaf: <http://xmlns.com/foaf/0.1/>
-    SELECT (str(?sub_label) as ?id) (str(?name_label) as ?str_name_label) (str(?country_label) as ?str_country_label) ?linkedinurl
-                    WHERE { ?sub <http://globalcompany.org/hasName> ?name .
+    SELECT (str(?sub_label) as ?id) (str(?name_label) as ?str_name_label) (str(?country_label) as ?str_country_label) ?linkedinurl (str(?result_domain) as ?domainurl)
+                    WHERE { BIND('-' as ?default_string)
+                            ?sub <http://globalcompany.org/hasName> ?name .
                             ?sub <http://globalcompany.org/locatedInCountry> ?country .
                             ?sub <http://globalcompany.org/hasLinkedinURL> ?linkedin .
                             ?sub rdfs:label ?sub_label .
                             ?name rdfs:label ?name_label .
                             ?country rdfs:label ?country_label .
+                            OPTIONAL {?sub <http://globalcompany.org/hasOfficialWebsite> ?domain .}
                             FILTER regex(str(?name_label), '""" + str(param) + """', 'i')
-                            BIND(CONCAT("https://", STR( ?linkedin )) AS ?linkedinurl)
+                            BIND(CONCAT("https://", STR( ?linkedin )) AS ?linkedinurl)  
+                            BIND(COALESCE(?domain, ?default_string) as ?result_domain)
                             } ORDER BY ASC(?str_name_label)""")
 
     sparql.setReturnFormat(JSON)

@@ -1,12 +1,11 @@
 from django.http import HttpResponse
-from companyinfo.query_rdf import getCompanyData, getAllCompany, getSomeCompany, getCompanyDataOnline
+from companyinfo.query_rdf import getCompanyData, getAllCompany, getSomeCompany, getCompanyDataOnline, getThumbnail
 from .models import Question
 from django.shortcuts import render
 from django.core.paginator import Paginator, EmptyPage, InvalidPage
 
 def index(request):
     return render(request, 'companyinfo/index.html')
-
 
 
 def search(request):
@@ -22,7 +21,8 @@ def search(request):
 
     listCompany = []
     for value in qres["results"]["bindings"]:
-        image = getImageThumbnail(value["id"]["value"])
+        image = getImageThumbnail(value["str_name_label"]["value"], value["domainurl"]["value"])
+        # image = ''
         listCompany.append({'id': value["id"]["value"], 'name': value["str_name_label"]["value"], 'country': value["str_country_label"]["value"], 'linkedin': value["linkedinurl"]["value"], 'img_thumbnail': image  })
 
     paginator = Paginator(listCompany, 24)
@@ -41,16 +41,8 @@ def search(request):
     return render(request, 'companyinfo/company_list.html', {'company': company, 'page_range': page_range, 'param': param, 'total_results':len(listCompany), 'query':param+""}
 )
 
-def getImageThumbnail(rdf_object):
-    name = ''
-    web = ''
-    qres = getCompanyData(rdf_object)
-
-    for row in qres["results"]["bindings"]:
-        name = row["str_name_label"]["value"]
-        web = str(row["domainurl"]["value"])
-
-    qresonline = getCompanyDataOnline(name, web)
+def getImageThumbnail(name, web):
+    qresonline = getThumbnail(name, web)
     image = ""
     for result in qresonline["results"]["bindings"]:
         image = result["str_thumbnail"]["value"]
