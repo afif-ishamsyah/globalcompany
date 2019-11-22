@@ -41,18 +41,18 @@
         <div id="company">
             <div class="row">
                 {% for value in company %}
-                <div class="col-4 py-3"> 
-                    <div class="card" style="width: 18rem;height: 100%; padding: 3%;">
-                        {% if 'http' in value.img_thumbnail %}
+                <div class="col-12 py-3"> 
+                    <!-- <div class="card" style="width: 18rem;height: 100%; padding: 3%;"> -->
+                        <!-- {% if 'http' in value.img_thumbnail %}
                         <img src="{{ value.img_thumbnail }}" alt="" height="100px" />
                         {% else %}
                         <img src="{% static 'image_not_found.jpg' %}" alt="" height="100px" />
-                        {% endif %}
-                        <hr>
+                        {% endif %} -->
+                        <!-- <hr> -->
                         <h5 id="capital"><b><a href="{% url 'info' value.id %}">{{ value.name }}</a></b></h5>
-                        <h6 id="capital"><b>Country: </b>{{ value.country }}</h6>
-                        <h6 style="text-align: left;"><b>LinkedIn URL: </b><a href="{{ value.linkedin }}">{{ value.linkedin }}</a></h6>
-                    </div>
+                        <h6 style="color: darkgrey;text-align: left;"><b id="capital">{{ value.country }}</b></h6>
+                        <p style="text-align: left;">Linkedin URL: <a style="color: darkgrey;" href="{{ value.linkedin }}">{{ value.linkedin }}</a></p>
+                    <!-- </div> -->
                 </div>
                 {% endfor %}    
             </div>
