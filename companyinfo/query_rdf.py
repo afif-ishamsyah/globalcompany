@@ -63,29 +63,29 @@ def getCompanyDataOnline(name, web):
     results = sparql.query().convert()
     return results
 
-def getThumbnail(name, web):
-    name  = str(name).replace(' ','_')
-    sparql = SPARQLWrapper("http://dbpedia.org/sparql")
-    sparql.setQuery("""
-    PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-    PREFIX foaf: <http://xmlns.com/foaf/0.1/>
-    SELECT 
-           (str(?result_thumbnail) as ?str_thumbnail)
-    WHERE { ?s a dbo:Company .
-            BIND('-' as ?default_string)
-            ?s <http://dbpedia.org/ontology/thumbnail> ?thumb .
-            OPTIONAL {?s foaf:homepage ?website .}
-            BIND(REPLACE(STR(?website), "https://www.", "", "i") AS ?homepage1)
-            BIND(REPLACE(STR(?homepage1), "http://www.", "", "i") AS ?homepage2)
-            BIND(REPLACE(STR(?homepage2), "https://", "", "i") AS ?homepage3)
-            BIND(REPLACE(STR(?homepage3), "http://", "", "i") AS ?homepage_clean)
-            BIND(COALESCE(?thumb, ?default_string) as ?result_thumbnail)
-            FILTER ( lcase(str(?s)) = 'http://dbpedia.org/resource/""" + name + """' || lcase(?homepage_clean) = '""" + web + """')} LIMIT 1""")
+# def getThumbnail(name, web):
+#     name  = str(name).replace(' ','_')
+#     sparql = SPARQLWrapper("http://dbpedia.org/sparql")
+#     sparql.setQuery("""
+#     PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+#     PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+#     SELECT 
+#            (str(?result_thumbnail) as ?str_thumbnail)
+#     WHERE { ?s a dbo:Company .
+#             BIND('-' as ?default_string)
+#             ?s <http://dbpedia.org/ontology/thumbnail> ?thumb .
+#             OPTIONAL {?s foaf:homepage ?website .}
+#             BIND(REPLACE(STR(?website), "https://www.", "", "i") AS ?homepage1)
+#             BIND(REPLACE(STR(?homepage1), "http://www.", "", "i") AS ?homepage2)
+#             BIND(REPLACE(STR(?homepage2), "https://", "", "i") AS ?homepage3)
+#             BIND(REPLACE(STR(?homepage3), "http://", "", "i") AS ?homepage_clean)
+#             BIND(COALESCE(?thumb, ?default_string) as ?result_thumbnail)
+#             FILTER ( lcase(str(?s)) = 'http://dbpedia.org/resource/""" + name + """' || lcase(?homepage_clean) = '""" + web + """')} LIMIT 1""")
 
             
-    sparql.setReturnFormat(JSON)
-    results = sparql.query().convert()
-    return results
+#     sparql.setReturnFormat(JSON)
+#     results = sparql.query().convert()
+#     return results
 
 def getCompanyData(param):
     company_id = '<http://globalcompany.org/' + param + '>'

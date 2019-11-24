@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from companyinfo.query_rdf import getCompanyData, getAllCompany, getSomeCompany, getCompanyDataOnline, getThumbnail
+from companyinfo.query_rdf import getCompanyData, getAllCompany, getSomeCompany, getCompanyDataOnline
 from .models import Question
 from django.shortcuts import render
 from django.core.paginator import Paginator, EmptyPage, InvalidPage
@@ -21,9 +21,10 @@ def search(request):
 
     listCompany = []
     for value in qres["results"]["bindings"]:
-        image = getImageThumbnail(value["str_name_label"]["value"], value["domainurl"]["value"])
+        # image = getImageThumbnail(value["str_name_label"]["value"], value["domainurl"]["value"])
         # image = ''
-        listCompany.append({'id': value["id"]["value"], 'name': value["str_name_label"]["value"], 'country': value["str_country_label"]["value"], 'linkedin': value["linkedinurl"]["value"], 'img_thumbnail': image  })
+        # listCompany.append({'id': value["id"]["value"], 'name': value["str_name_label"]["value"], 'country': value["str_country_label"]["value"], 'linkedin': value["linkedinurl"]["value"], 'img_thumbnail': image  })
+        listCompany.append({'id': value["id"]["value"], 'name': value["str_name_label"]["value"], 'country': value["str_country_label"]["value"], 'linkedin': value["linkedinurl"]["value"] })
 
     paginator = Paginator(listCompany, 24)
 
@@ -41,12 +42,12 @@ def search(request):
     return render(request, 'companyinfo/company_list.html', {'company': company, 'page_range': page_range, 'param': param, 'total_results':len(listCompany), 'query':param+""}
 )
 
-def getImageThumbnail(name, web):
-    qresonline = getThumbnail(name, web)
-    image = ""
-    for result in qresonline["results"]["bindings"]:
-        image = result["str_thumbnail"]["value"]
-    return image
+# def getImageThumbnail(name, web):
+#     qresonline = getThumbnail(name, web)
+#     image = ""
+#     for result in qresonline["results"]["bindings"]:
+#         image = result["str_thumbnail"]["value"]
+#     return image
 
 def info(request, rdf_object):
     local_result = {}
@@ -78,18 +79,18 @@ def info(request, rdf_object):
     qresonline = getCompanyDataOnline(name, web)
     
     for result in qresonline["results"]["bindings"]:
-        online_result['topic'] = result["str_topic"]["value"]
-        online_result['wikipageid'] = result["str_wikipageid"]["value"]
-        online_result['latitude'] = result["str_latitude"]["value"]
-        online_result['longitude'] = result["str_longitude"]["value"]
-        online_result['abstract'] = result["str_abstract"]["value"]
-        online_result['assets'] = '${:,.2f}'.format(float(result["str_assets"]["value"]))
-        online_result['equity'] = '${:,.2f}'.format(float(result["str_equity"]["value"]))
-        online_result['location'] = str(result["str_location"]["value"]).split("/")[-1].replace('_',' ')
-        online_result['netincome'] = '${:,.2f}'.format(float(result["str_netincome"]["value"]))
-        online_result['operatingincome'] = '${:,.2f}'.format(float(result["str_operatingincome"]["value"]))
-        online_result['revenue'] = '${:,.2f}'.format(float(result["str_revenue"]["value"]))
-        online_result['areaserved'] = result["str_areaserved"]["value"]
-        online_result['thumbnail'] = result["str_thumbnail"]["value"]
+        if str(result["str_topic"]["value"]) != '-': online_result['topic'] = result["str_topic"]["value"]
+        if str(result["str_wikipageid"]["value"]) != '-': online_result['wikipageid'] = result["str_wikipageid"]["value"]
+        if str(result["str_latitude"]["value"]) != '-': online_result['latitude'] = result["str_latitude"]["value"]
+        if str(result["str_longitude"]["value"]) != '-': online_result['longitude'] = result["str_longitude"]["value"]
+        if str(result["str_abstract"]["value"]) != '-':online_result['abstract'] = result["str_abstract"]["value"]
+        if str(result["str_assets"]["value"]) != '0': online_result['assets'] = '${:,.2f}'.format(float(result["str_assets"]["value"]))
+        if str(result["str_equity"]["value"]) != '0': online_result['equity'] = '${:,.2f}'.format(float(result["str_equity"]["value"]))
+        if str(result["str_location"]["value"]) != '-': online_result['location'] = str(result["str_location"]["value"]).split("/")[-1].replace('_',' ')
+        if str(result["str_netincome"]["value"]) != '0': online_result['netincome'] = '${:,.2f}'.format(float(result["str_netincome"]["value"]))
+        if str(result["str_operatingincome"]["value"]) != '0': online_result['operatingincome'] = '${:,.2f}'.format(float(result["str_operatingincome"]["value"]))
+        if str(result["str_revenue"]["value"]) != '0': online_result['revenue'] = '${:,.2f}'.format(float(result["str_revenue"]["value"]))
+        if str(result["str_areaserved"]["value"]) != '-': online_result['areaserved'] = result["str_areaserved"]["value"]
+        if str(result["str_thumbnail"]["value"]) != '-': online_result['thumbnail'] = result["str_thumbnail"]["value"]
 
     return render(request, 'companyinfo/company_details_alt.html', {'local_result': local_result, 'online_result': online_result})
