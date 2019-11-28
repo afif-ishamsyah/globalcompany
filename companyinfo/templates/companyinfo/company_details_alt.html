@@ -50,6 +50,8 @@
 
 							{% if 'Not Exist' not in online_result.thumbnail %}
 							<p><img src="{{ online_result.thumbnail }}" width="500" alt="Picture of {{ local_result.name }}" /></p>
+							{% else %}
+							<p><img src="{% static 'image_not_found.jpg' %}" width="500" alt="Picture of {{ local_result.name }}" /></p>
 							{% endif %}
 							{% if 'Not Exist' not in online_result.abstract %}
 							<p>{{ online_result.abstract }}</p>
