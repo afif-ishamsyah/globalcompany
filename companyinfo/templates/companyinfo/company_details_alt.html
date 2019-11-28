@@ -26,10 +26,6 @@
                     {% else %}
                         <input  id="search_box" type="text" name="companyname"  placeholder="Search company name...">
                     {% endif %}
-                    <select name="categories" id="custom-select">
-                        <option value="companyname">Search by Company Name</option>
-                        <option value="country">Search by Country</option>
-                    </select> 
 
                     <input id="search_submit" type="submit" value="Search">
                 </form>
@@ -63,12 +59,17 @@
 							<br>
 							
 						</div>
-						{% if 'Not Exist' not in local_result.linkedinurl and 'Not Exist' not in local_result.domainurl %}
-						<p class="meta">From <a href="{{ online_result.topic }}">Wikipedia</a> &nbsp;&bull;&nbsp;<a href="{{ local_result.linkedinurl }}" class="permalink">Full profile</a> &nbsp;&bull;&nbsp; <a href="{{ local_result.domainurl }}" class="permalink">Go to {{ local_result.domainurl }}</a></p>
-						{% else %}
-						<p class="meta">From <a href="{{ online_result.topic }}">Wikipedia</a> 
-							<a href="{{ online_result.topic }}" class="permalink">Full article</a></p>
-						{% endif %}
+						<p class="meta">
+							{% if 'Not Exist' not in online_result.abstract %}
+							From <a href="{{ online_result.topic }}">Wikipedia</a>&nbsp;&bull;&nbsp;
+							{% endif %}
+							{% if 'http' in local_result.linkedinurl %}
+							 <a href="{{ local_result.linkedinurl }}" class="permalink">Full profile</a>
+							{% endif %}
+							{% if 'http' in local_result.domainurl %}
+							&nbsp;&bull;&nbsp; <a href="{{ local_result.domainurl }}" class="permalink">Go to {{ local_result.domainurl }}</a>
+							{% endif %}
+						</p>
 					</div>
 					<div style="clear: both;">&nbsp;</div>
 				</div>
@@ -110,12 +111,12 @@
 										<th>Total Employee (est.):</th><td>{{ local_result.total }}</td>
 									</tr>
 									{% endif %}
-									{% if 'Not Exist' not in local_result.domainurl %}
+									{% if 'http' in local_result.domainurl %}
 									<tr>
 										<th>Domain:</th><td><a href="{{ local_result.domainurl }}">{{ local_result.domainurl }}</a></td>
 									</tr>
 									{% endif %}
-									{% if 'Not Exist' not in local_result.linkedinurl %}
+									{% if 'http' in local_result.linkedinurl %}
 									<tr>
 										<th>Linkedin Link:</th><td><a href="{{ local_result.linkedinurl }}">{{ local_result.linkedinurl }}</a></td>
 									</tr>
