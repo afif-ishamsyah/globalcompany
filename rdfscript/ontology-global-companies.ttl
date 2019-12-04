@@ -21,6 +21,9 @@
 # ontology classes
 #############################
 
+gco:ID a rdfs:Class .
+gco:ID rdfs:label "id"@en .
+
 gco:GlobalCompany a rdfs:Class .
 gco:GlobalCompany rdfs:label "Global Company"@en .
 
@@ -39,6 +42,10 @@ gco:Country rdfs:label "Country"@en .
 #############################
 # ontology properties
 #############################
+
+gco:hasName a rdf:Property .
+gco:hasName rdfs:label "has name"@en .
+gco:hasName rdfs:range gco:GlobalCompany .
 
 gco:hasOfficialWebsite a rdf:Property .
 gco:hasOfficialWebsite rdfs:label "has official website"@en .

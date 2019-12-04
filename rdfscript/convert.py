@@ -41,7 +41,7 @@ for row in reader:
 
 		labelid = preprocess(c[0], 1)
 		labelid =  '<' + prefix + c[0] + '>' + ' ' + '<' +'http://www.w3.org/2000/01/rdf-schema#label' + '>' + ' ' + '\"' + labelid + '\"' + ' ' + '.\n'
-		outfile.write(labelid) 
+		outfile.write(labelid)
 
 		companyname = preprocess(c[1], 0)
 		name = '<' + prefix + c[0] + '>' + ' ' + '<' + prefix + 'hasName' + '>' + ' ' + '<' + prefix + companyname + '>' + ' ' + '.\n'

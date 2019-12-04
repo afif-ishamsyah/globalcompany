@@ -58,6 +58,16 @@ for row in reader:
 	else: # if it's not the first row, place the contents of the row into the 'c' variable, then create a 'd' variable with the stuff we want in the file.
 		c = row
 
+		id = preprocess(c[0], 1)
+		companyname = preprocess(c[1], 0)
+
+		id = 'gco:' + c[0] + ' a gco:ID ;\n'
+		hasname_id = '\tgco:hasName gco:' + companyname + ' ;\n'
+		labelid = '\trdfs:label "' + c[0] + '" .\n'
+		outfile.write(id)
+		outfile.write(hasname_id)
+		outfile.write(labelid)
+
 		companyname = preprocess(c[1], 0)
 		globalcompany = 'gco:' + companyname + ' a gco:GlobalCompany ;\n'
 		outfile.write(globalcompany)
@@ -117,8 +127,10 @@ for row in reader:
 
 	rownum += 1
 	count += 1 
-	if count % 5000000 == 0:
-		print("data ke-" + str(count))
+	# if count % 5000000 == 0:
+	# 	print("data ke-" + str(count))
+	if count == 2:
+		break
 
 outfile.write('\n')
 
