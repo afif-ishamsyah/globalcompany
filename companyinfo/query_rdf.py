@@ -20,7 +20,9 @@ def getCompanyDataOnline(name, web):
            (str(?result_revenue) as ?str_revenue)
            (str(?result_areaserved) as ?str_areaserved)
            (str(?result_thumbnail) as ?str_thumbnail)
-           (group_concat(distinct ?result_keyperson;separator=",") as ?result_keypersons)
+           (group_concat(distinct ?result_keyperson;separator=", ") as ?result_keypersons)
+           (group_concat(distinct ?result_product;separator=", ") as ?result_products)
+           (group_concat(distinct ?result_service;separator=", ") as ?result_services)
     WHERE { ?s a dbo:Company .
             BIND('-' as ?default_string)
             BIND( 0 as ?default_number)
@@ -36,6 +38,8 @@ def getCompanyDataOnline(name, web):
             OPTIONAL {?s <http://dbpedia.org/ontology/revenue> ?revenue .}
             OPTIONAL {?s <http://dbpedia.org/property/areaServed> ?areaserved .}
             OPTIONAL {?s <http://dbpedia.org/ontology/keyPerson> ?keyperson .}
+            OPTIONAL {?s <http://dbpedia.org/ontology/product> ?product .}
+            OPTIONAL {?s <http://dbpedia.org/ontology/service> ?service .}
             OPTIONAL {?s foaf:homepage ?website .}
             OPTIONAL {?s <http://dbpedia.org/ontology/thumbnail> ?thumb .}
             BIND(REPLACE(STR(?website), "https://www.", "", "i") AS ?homepage1)
@@ -54,6 +58,8 @@ def getCompanyDataOnline(name, web):
             BIND(COALESCE(?revenue, ?default_number) as ?result_revenue)
             BIND(COALESCE(?areaserved, ?default_string) as ?result_areaserved)
             BIND(COALESCE(?keyperson, ?default_string) as ?result_keyperson)
+            BIND(COALESCE(?product, ?default_string) as ?result_product)
+            BIND(COALESCE(?service, ?default_string) as ?result_service)
             BIND(COALESCE(?thumb, ?default_string) as ?result_thumbnail)
             FILTER (lang(?abstract) = 'en')
             FILTER ( lcase(str(?s)) = 'http://dbpedia.org/resource/""" + name + """' || lcase(?homepage_clean) = '""" + web + """')} GROUP BY ?s 

@@ -172,6 +172,16 @@
 										<th>Area Served</th><td>{{ online_result.areaserved }}</td>
 									</tr>
 									{% endif %}
+									{% if 'Not Exist' not in online_result.product %}
+									<tr>
+										<th>Products</th><td>{{ online_result.product }}</td>
+									</tr>
+									{% endif %}
+									{% if 'Not Exist' not in online_result.service %}
+									<tr>
+										<th>Services</th><td>{{ online_result.service }}</td>
+									</tr>
+									{% endif %}
 								</tbody>
 							</table>
 						</li>

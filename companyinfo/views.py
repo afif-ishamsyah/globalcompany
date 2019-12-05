@@ -87,7 +87,9 @@ def info(request, rdf_object):
         if str(result["str_abstract"]["value"]) != '-':online_result['abstract'] = result["str_abstract"]["value"]
         if str(result["str_assets"]["value"]) != '0': online_result['assets'] = '${:,.2f}'.format(float(result["str_assets"]["value"]))
         if str(result["str_equity"]["value"]) != '0': online_result['equity'] = '${:,.2f}'.format(float(result["str_equity"]["value"]))
-        if str(result["result_keypersons"]["value"]) != '-': online_result['keyperson'] = str(result["result_keypersons"]["value"]).replace('http://dbpedia.org/resource/','').replace('_',' ').replace(',',', ')
+        if str(result["result_keypersons"]["value"]) != '-': online_result['keyperson'] = str(result["result_keypersons"]["value"]).replace('http://dbpedia.org/resource/','').replace('_',' ')
+        if str(result["result_products"]["value"]) != '-': online_result['product'] = str(result["result_products"]["value"]).replace('http://dbpedia.org/resource/','').replace('_',' ')
+        if str(result["result_services"]["value"]) != '-': online_result['service'] = str(result["result_services"]["value"]).replace('http://dbpedia.org/resource/','').replace('_',' ')
         if str(result["str_netincome"]["value"]) != '0': online_result['netincome'] = '${:,.2f}'.format(float(result["str_netincome"]["value"]))
         if str(result["str_operatingincome"]["value"]) != '0': online_result['operatingincome'] = '${:,.2f}'.format(float(result["str_operatingincome"]["value"]))
         if str(result["str_revenue"]["value"]) != '0': online_result['revenue'] = '${:,.2f}'.format(float(result["str_revenue"]["value"]))
