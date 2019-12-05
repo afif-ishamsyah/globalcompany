@@ -16,11 +16,12 @@
 <caption>Local Data</caption>
     <tr>
         <th>Company Name</th>
+        <th>City</th>
+        <th>State</th>
         <th>Country</th>
         <th>Industry</th>
         <th>Year Founded</th>
         <th>Company Size (linkedin)</th>
-        <th>Locality</th>
         <th>Current Employee</th>
         <th>Total Employee (est.)</th>
         <th>Domain</th>
@@ -28,11 +29,12 @@
     </tr>
     <tr>
         <td> {{ local_result.name }}</td>
-        <td> {{ local_result.country_label }} </td>
-        <td> {{ local_result.industry_label }} </td>
+        <td> {{ local_result.city }} </td>
+        <td> {{ local_result.state }} </td>
+        <td> {{ local_result.country }} </td>
+        <td> {{ local_result.industry }} </td>
         <td> {{ local_result.year }} </td>
         <td> {{ local_result.size }} </td>
-        <td> {{ local_result.locality_label }} </td>
         <td> {{ local_result.current }} </td>
         <td> {{ local_result.total }} </td>
         {% if 'Not Exist' not in local_result.domainurl %}

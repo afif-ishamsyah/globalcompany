@@ -59,11 +59,12 @@ def info(request, rdf_object):
     for row in qres["results"]["bindings"]:
         name = row["str_name_label"]["value"]
         local_result['name'] = str(row["str_name_label"]["value"]).title()
-        local_result['country_label'] = row["str_country_label"]["value"]
-        local_result['industry_label'] = row["str_industry_label"]["value"]
+        local_result['city'] = str(row["str_city_label"]["value"]).title()
+        local_result['state'] = str(row["str_state_label"]["value"]).title()
+        local_result['country'] = str(row["str_country_label"]["value"]).title()
+        local_result['industry'] = row["str_industry_label"]["value"]
         local_result['year'] = row["str_year"]["value"]
         local_result['size'] = row["str_size"]["value"]
-        local_result['locality_label'] = row["str_locality_label"]["value"]
         local_result['current'] = row["str_current"]["value"]
         local_result['total'] = row["str_total"]["value"]
         local_result['linkedinurl'] = ''
@@ -86,7 +87,7 @@ def info(request, rdf_object):
         if str(result["str_abstract"]["value"]) != '-':online_result['abstract'] = result["str_abstract"]["value"]
         if str(result["str_assets"]["value"]) != '0': online_result['assets'] = '${:,.2f}'.format(float(result["str_assets"]["value"]))
         if str(result["str_equity"]["value"]) != '0': online_result['equity'] = '${:,.2f}'.format(float(result["str_equity"]["value"]))
-        if str(result["str_location"]["value"]) != '-': online_result['location'] = str(result["str_location"]["value"]).split("/")[-1].replace('_',' ')
+        if str(result["result_keypersons"]["value"]) != '-': online_result['keyperson'] = str(result["result_keypersons"]["value"]).replace('http://dbpedia.org/resource/','').replace('_',' ').replace(',',', ')
         if str(result["str_netincome"]["value"]) != '0': online_result['netincome'] = '${:,.2f}'.format(float(result["str_netincome"]["value"]))
         if str(result["str_operatingincome"]["value"]) != '0': online_result['operatingincome'] = '${:,.2f}'.format(float(result["str_operatingincome"]["value"]))
         if str(result["str_revenue"]["value"]) != '0': online_result['revenue'] = '${:,.2f}'.format(float(result["str_revenue"]["value"]))

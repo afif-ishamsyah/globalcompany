@@ -41,7 +41,7 @@
 						<h2 class="title"><a href="{{ local_result.linkedinurl }}">{{ local_result.name }} (company)</a></h2>
 						
 						<div class="entry abstract">
-							<h6>Country: {{ local_result.country_label }}, Industry:{{ local_result.industry_label }}</h6>
+							<h6>Country: {{ local_result.country }}, Industry:{{ local_result.industry }}</h6>
 							<br><br>
 
 							{% if 'Not Exist' not in online_result.thumbnail %}
@@ -96,11 +96,6 @@
 										<th>Company Size (linkedin):</th><td>{{ local_result.size }}</td>
 									</tr>
 									{% endif %}
-									{% if 'Not Exist' not in local_result.locality_label %}
-									<tr>
-										<th>Locality:</th><td style="text-transform: capitalize;">{{ local_result.locality_label }}</td>
-									</tr>
-									{% endif %}
 									{% if 'Not Exist' not in local_result.current %}
 									<tr>
 										<th>Current Employee:</th><td>{{ local_result.current }}</td>
@@ -141,9 +136,19 @@
 										<th>Equity</th><td>{{ online_result.equity }}</td>
 									</tr>
 									{% endif %}
-									{% if 'Not Exist' not in online_result.location %}
+									{% if 'Not Exist' not in local_result.city %}
 									<tr>
-										<th>Location</th><td>{{ online_result.location }}</td>
+										<th>City</th><td>{{ local_result.city }}</td>
+									</tr>
+									{% endif %}
+									{% if 'Not Exist' not in local_result.state %}
+									<tr>
+										<th>State</th><td>{{ local_result.state }}</td>
+									</tr>
+									{% endif %}
+									{% if 'Not Exist' not in online_result.keyperson %}
+									<tr>
+										<th>Key Person</th><td>{{ online_result.keyperson }}</td>
 									</tr>
 									{% endif %}
 									{% if 'Not Exist' not in online_result.netincome %}
