@@ -32,7 +32,7 @@ This project webpage can be accessed in [http://global-company.herokuapp.com/](h
 
 ### Django
 1. Open anaconda prompt.
-2. Make sure you have these libraries : django and SPARQLWrapper.
+2. Make sure you have these libraries : django, django_heroku, and SPARQLWrapper.
 3. Enter directory /globalcompany.
 4. Run command : python manage.py runserver.
 5. Pay attention on the locahost port given by manage.py. Usually it use localhost:8000.
