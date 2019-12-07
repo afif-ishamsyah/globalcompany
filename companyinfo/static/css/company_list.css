@@ -76,3 +76,7 @@ input#search_box:hover {
     background-color: #4CAF50;
     color: white;
 }
+
+.prev_next a {
+    margin-right: 20px;
+}

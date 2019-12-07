@@ -21,9 +21,6 @@
 # ontology classes
 #############################
 
-gco:ID a rdfs:Class .
-gco:ID rdfs:label "id"@en .
-
 gco:GlobalCompany a rdfs:Class .
 gco:GlobalCompany rdfs:label "Global Company"@en .
 

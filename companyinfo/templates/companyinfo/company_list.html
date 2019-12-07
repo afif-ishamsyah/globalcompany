@@ -54,15 +54,12 @@
             </div>
         </div>
 
-        <div class="prev_next">
+        <div class="prev_next" style="display: inline-flex; margin-bottom: 20px; padding: 5px;">
             {% if company.has_previous %}
                 <a class="prev btn btn-info" href="?companyname={{ param }}&page=1">&laquo; first</a>
                 <a class="prev btn btn-info" href="?companyname={{ param }}&page={{company.previous_page_number}}">Prev</a>
             {% endif %}
-            {% if company.has_next %}
-                <a class="next btn btn-info" href="?companyname={{ param }}&page={{company.next_page_number}}">Next</a>
-                <a class="prev btn btn-info" href="?companyname={{ param }}&page={{ company.paginator.num_pages }}">last &raquo;</a>
-            {% endif %}
+
             <div class="pages">    
                 {% for pg in page_range %}
                     {% if company.number == pg %}
@@ -72,6 +69,12 @@
                     {% endif %}
                 {% endfor %}
             </div>
+
+            {% if company.has_next %}
+                <a class="next btn btn-info" href="?companyname={{ param }}&page={{company.next_page_number}}">Next</a>
+                <a class="prev btn btn-info" href="?companyname={{ param }}&page={{ company.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+            
             <span class="clear_both"></span>
         </div>
     </div>
