@@ -1,8 +1,6 @@
 # globalcompany
 Web Semantic (2019) Project Assignment
 
-This project webpage can be accessed in [http://global-company.herokuapp.com/](http://global-company.herokuapp.com/)
-
 ## How to use (after you clone this git) :
 
 ### Data
